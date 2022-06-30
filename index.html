@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru_RU">
+    <head>
+        <meta charset="UTF-8">
+
+        <title>Template</title>
+        <meta name="description" content="Template">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="style/style.css?123" type="text/css">
+
+        <link rel="icon" href="favicon.png"> <!--32х32-->
+
+        <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png"> <!--60х60-->
+        <link rel="apple-touch-icon" sizes="76x76" href="icons/touch-icon-ipad.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="icons/touch-icon-iphone-retina.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad-retina.png">
+    </head>
+    <body>
+
+        <div id="brickCalcContainer">
+            <div id="visualDiv">
+                <img id="visualImg" src="house_empty.png" alt="Калькулятор кирпича и раствора">
+            </div>
+            <div id="perimeterDiv">
+                <label for="inputPerimeterSize" onmouseover="changeVisualImageTo('house_p.png')" onmouseleave="hideVisualImage()">Периметр:
+                    <input type="number" id="inputPerimeterSize" value="36.000" min="1" step="0.005" max="10000" onchange="inputNumberOnchange(this)"> м
+                </label>
+            </div>
+            <div id="heightDiv">
+                <label for="inputHeightSize" onmouseover="changeVisualImageTo('house_h.png')" onmouseleave="hideVisualImage()">Высота:
+                    <input type="number" id="inputHeightSize" value="6" min="0.065" step="0.005" max="100" onchange="inputNumberOnchange(this)"> м
+                </label>
+            </div>
+            <div id="wallTypeButtonsDiv">
+                <button onmouseover="changeVisualImageBase('f')" onmouseleave="hideVisualImage()" onclick="changeWallType('facade')">
+                    Только фасадная кладка
+                </button>
+                <button class="selected" onmouseover="changeVisualImageBase('f_')" onmouseleave="hideVisualImage()" onclick="changeWallType('all')">
+                    Фасадная и внутренняя кладка
+                </button>
+                <button onmouseover="changeVisualImageBase('')" onmouseleave="hideVisualImage()" onclick="changeWallType('base')">
+                    Только внутренняя кладка
+                </button>
+            </div>
+            <div id="wallDataDiv">
+                <div id="facadeDiv">
+                    <div class="title-calc-div">Фасад</div>
+                    <label for="selectFacadeBrickSize">Кирпич:
+                        <select id="selectFacadeBrickSize" onchange="selectOnchange(this.id, this.value)">
+                            <option value="250 60 65">0,5 НФ (250x60x65 мм)</option>
+                            <option value="250 85 65">0,7 НФ (250x85x65 мм)</option>
+                            <option selected value="250 120 65">1,0 НФ (250x120x65 мм)</option>
+                            <option value="250 120 88">1,4 НФ (250x120x88 мм)</option>
+                            <option value="240 115 71">1NF (240x115x71 мм)</option>
+                            <option value="210 100 65">WDF (210x100x65 мм)</option>
+                        </select>
+                    </label> ,
+                    <label for="inputFacadeBrickSeam">шов:
+                        <input type="number" id="inputFacadeBrickSeam" value="10" min="2" step="1" max="15" onchange="inputNumberOnchange(this)"> мм
+                    </label>
+                </div>
+                <div id="baseDiv">
+                    <div class="title-calc-div">Внутренняя кладка</div>
+                    <div id="baseGap">
+                        <label for="inputGapSize" onmouseover="changeVisualImageBaseSize()" onmouseleave="hideVisualImage()">Тепловой зазор между фасадом и стеной:
+                            <input type="number" id="inputGapSize" value="50" min="0" step="1" max="1000" onchange="inputNumberOnchange(this)"> мм
+                        </label>
+                    </div>
+                    <label for="radioBaseBrick" onmouseover="changeVisualImageBaseType('k')" onmouseleave="hideVisualImage()">
+                        <input id="radioBaseBrick" type="radio" name="baseType" checked onchange="radioBaseOnchange(this)">
+                        <span>Рядовой кирпич</span>
+                    </label>
+                    <label for="radioBaseBlockCeramic" onmouseover="changeVisualImageBaseType('b')" onmouseleave="hideVisualImage()">
+                        <input id="radioBaseBlockCeramic" type="radio" name="baseType" onchange="radioBaseOnchange(this)">
+                        <span>Керамический блок</span>
+                    </label>
+                    <label for="radioBaseBlockSilicate" onmouseover="changeVisualImageBaseType('p')" onmouseleave="hideVisualImage()">
+                        <input id="radioBaseBlockSilicate" type="radio" name="baseType" onchange="radioBaseOnchange(this)">
+                        <span>Газосиликатный блок</span>
+                    </label>
+                    <div id="baseBrickDiv">
+                        <label for="selectBaseBrickSize">Кирпич: 
+                            <select id="selectBaseBrickSize" onchange="selectOnchange(this.id, this.value)">
+                                <option selected value="250 120 65">250x120x65</option>
+                                <option value="250 120 88">250x120x88</option>
+                                <option value="250 120 140">250x120x140</option>
+                            </select>  мм, 
+                        </label>
+                        <label for="selectBaseBrickWallSize">кладка:
+                            <select id="selectBaseBrickWallSize" onchange="selectOnchange(this.id, this.value)">
+                                <option value="0.5">0,5 кирпича</option>
+                                <option selected value="1">1 кирпич</option>
+                                <option value="1.5">1,5 кирпича</option>
+                                <option value="2">2 кирпича</option>
+                            </select>
+                        </label> ,
+                        <label for="inputBaseBrickSeam">шов:
+                            <input type="number" id="inputBaseBrickSeam" value="10" min="2" step="1" max="15" onchange="inputNumberOnchange(this)"> мм
+                        </label>
+                    </div>
+                    <div id="baseBlockCeramicDiv">
+                        <label for="selectBaseBlockCeramicSize">Размеры блока:
+                            <select id="selectBaseBlockCeramicSize" onchange="selectOnchange(this.id, this.value)">
+                                <option selected value="380 250 219">Блоки 10,7 НФ (380x250x219 мм)</option>
+                                <option value="398 250 219">Блоки 11,2 НФ (398x250x219 мм)</option>
+                                <option value="440 250 219">Блоки 12,4 НФ (440x250x219 мм)</option>
+                                <option value="510 250 219">Блоки 14,3 НФ (510x250x219 мм)</option>
+                            </select>
+                        </label> ,
+                        <label for="inputBaseBlockCeramicSeam">шов:
+                            <input type="number" id="inputBaseBlockCeramicSeam" value="15" min="10" step="1" max="50" onchange="inputNumberOnchange(this)"> мм
+                        </label>
+                    </div>
+                    <div id="baseBlockSilicateDiv">
+                        <label for="selectBaseBlockSilicateSize">Размеры блока:
+                            <select id="selectBaseBlockSilicateSize" onchange="selectOnchange(this.id, this.value)">
+                                <option value="625 250 250">625x250x250 мм</option>
+                                <option value="625 300 250">625x300x250 мм</option>
+                                <option value="625 375 250">625x375x250 мм</option>
+                                <option selected value="625 400 250">625x400x250 мм</option>
+                                <option value="625 500 250">625x500x250 мм</option>
+                            </select>
+                        </label> ,
+                        <label for="inputBaseBlockSilicateSeam">шов:
+                            <input type="number" id="inputBaseBlockSilicateSeam" value="3" min="2" step="1" max="15" onchange="inputNumberOnchange(this)"> мм
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="holesDataDiv" onmouseover="changeVisualImageTo('house_x.png')" onmouseleave="hideVisualImage()">
+                <div class="title-calc-div">Оконные и дверные проёмы</div>
+                <button id="addHoleButton" class="add-div" onclick="addHole()">Добавить проём</button>
+            </div>
+            <div id="garretsDataDiv" onmouseover="changeVisualImageTo('house_r.png')" onmouseleave="hideVisualImage()">
+                <div class="title-calc-div">Мансарда</div>
+                <button id="addGarretButton" class="add-div" onclick="showGarretPopupSell()">Добавить мансарду</button>
+            </div>
+            <div id="resultDataDiv">
+                <div class="title-calc-div">Результаты расчетов</div>
+                <span id="resultErrors">Скоро все заработает</span>
+                <span id="resultData"></span>
+            </div>
+        </div>
+
+        <div id="landscapeOrientationShell"></div>
+
+        <div id="addGarretPopupShell" onclick="hideGarretPopupSell()">
+            <div class="garret-popup">
+                <div class="garret-popup-title">Выберите форму мансарды</div>
+                <img src="garret_type_1.png" alt="Тип мансарды 1" onclick="addGarretType(1)">
+                <img src="garret_type_2.png" alt="Тип мансарды 2" onclick="addGarretType(2)">
+                <img src="garret_type_3.png" alt="Тип мансарды 3" onclick="addGarretType(3)">
+            </div>
+        </div>
+
+        <div id="landscapeOrientationShell"></div>
+
+        <script src="js/main.js"></script>
+
+    </body>
+</html>
